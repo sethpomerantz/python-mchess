@@ -712,7 +712,9 @@ class TurquoiseDispatcher:
         if len(self.undo_stack) > 0:
             self.stop()
             move = self.undo_stack.pop()
-            self.stats.append(self.undo_stats_stack.pop())
+            if len(self.undo_stats_stack > 0):
+                self.stats.append(self.undo_stats_stack.pop())
+                
             self.board.push(move)
             self.update_display_board()
             self.update_stats()
