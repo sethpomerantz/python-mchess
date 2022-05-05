@@ -1,0 +1,19 @@
+{
+  "name": "mchess-pgn-player",
+  "version": "0.0.1",
+  "description": "sends commands to websocket controller of mchess ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "^4.5.0",
+    "websocket": "^1.0.34",
+    "ws": "^8.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0"
+  }
+}
