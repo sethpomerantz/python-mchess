@@ -13,3 +13,4 @@ mchess/web/package-lock.json
 mchess/turquoise.log
 .DS_Store
 .pgn
+node_modules
