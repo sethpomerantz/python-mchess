@@ -5,7 +5,7 @@ const connection = new WebSocket(url);
 const readline = require('readline');
 
 readline.emitKeypressEvents(process.stdin);
-// process.stdin.setRawMode(true);
+process.stdin.setRawMode(true);
 
 const fs = require('fs');
 const path = require('path');
