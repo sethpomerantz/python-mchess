@@ -49,14 +49,14 @@ process.stdin.on('keypress', (str, key) => {
   } else {
     if (key.name === '1') {
       moveBackward();
-    } else if (key.name === '3') {
-      moveForward();
-    } else if (key.name === '2') {
-      loadPGN();
       if (doubled == true) {
         console.log('Move Start');
         move_start();
       }
+    } else if (key.name === '3') {
+      moveForward();
+    } else if (key.name === '2') {
+      loadPGN();
     }
     console.log(`You pressed the "${key.name}" key`);
   }
