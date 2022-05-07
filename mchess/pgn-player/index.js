@@ -22,7 +22,7 @@ function loadRandomPGN() {
   console.log('Random PGN is', file);
 
   try {
-    return fs.readFileSync(path.join(process.cwd(), 'pgn', file), 'utf8');
+    return fs.readFileSync(path.join(process.cwd(), '/python-mchess/mchess/pgn-player/pgn', file), 'utf8');
   } catch (err) {
     console.error(err);
   }
