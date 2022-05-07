@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const url = 'ws://127.0.0.1:8001/ws';
+const url = 'ws://192.168.10.51:8001/ws';
 const connection = new WebSocket(url);
 const readline = require('readline');
 
