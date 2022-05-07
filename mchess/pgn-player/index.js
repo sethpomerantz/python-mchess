@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 function loadRandomPGN() {
-  const files = fs.readdirSync(path.join(process.cwd(), 'pgn'));
+  const files = fs.readdirSync(path.join(process.cwd(), '/python-mchess/mchess/pgn-player/pgn'));
 
   const max = files.length - 1;
   const min = 0;
