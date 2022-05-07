@@ -47,11 +47,11 @@ process.stdin.on('keypress', (str, key) => {
   if (key.ctrl && key.name === 'c') {
     process.exit();
   } else {
-    if (key.name === 'left') {
+    if (key.name === '1') {
       moveBackward();
-    } else if (key.name === 'right') {
+    } else if (key.name === '3') {
       moveForward();
-    } else if (key.name === 'down') {
+    } else if (key.name === '2') {
       loadPGN();
       if (doubled == true) {
         console.log('Move Start');
