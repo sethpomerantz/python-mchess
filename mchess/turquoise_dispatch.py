@@ -6,6 +6,10 @@ from enum import Enum
 import copy
 import io
 
+import csv
+import glob
+
+
 import chess
 import chess.pgn
 
@@ -14,6 +18,14 @@ class TurquoiseDispatcher:
     ''' Main dispatcher and event state machine '''
 
     def __init__(self, appque, prefs, agents, uci_conf):
+        self.openings_eco = []
+
+        for in_path in glob.glob("./resources/openings/*.tsv"):
+                with open(in_path) as in_file:
+                    for line in in_file:
+                        # (eco,name,pgn,uci_line,epd) = 
+                        self.openings_eco.append(line.split("\t"))
+
         self.log = logging.getLogger('StateMachine')
         self.appque = appque
         self.prefs = prefs
@@ -43,6 +55,12 @@ class TurquoiseDispatcher:
         self.player_w_name = None
         self.player_b_name = None
         self.player_watch_name = None
+
+        self.eco_code = ''
+        self.eco_name = ''
+
+        self.match_date = ''
+        self.match_site = ''
 
         self.board.reset()
         self.undo_stack = []
@@ -334,17 +352,62 @@ class TurquoiseDispatcher:
             return True
         return False
 
+
+    # def set_eco_code(self):
+    #     eco_dict  =  {}
+    #     eco_name =  ''
+    #     eco_code = ''
+    #     uci_in = ''
+    #     # get uci move stack
+    #     if (len(self.board.move_stack) > 0):
+    #         for move in self.board.move_stack:
+    #             uci_in = f'{uci_in} {move.uci()}'
+
+    #     longest_uci = uci_in
+
+    #     # read in openings 
+        
+    #     for el in self.openings_eco:
+    #         # (eco,name,pgn,uci,epd) 
+    #         uci_line = el[3]
+    #         if uci_line.startswith(uci_in):
+    #             if len(uci_line) <= len(longest_uci):
+    #                 longest_uci = uci_line
+    #                 eco_name = el[1]
+    #                 print(el[1])
+
+    #                 self.eco_name = el[1]
+    #                 self.eco_code = el[0]
+
+
+       
+
+
+
+
     def update_display_board(self):
+        uci_move_list = ''
         st_board = copy.deepcopy(self.board)
+        for move in st_board.move_stack:
+            uci_move_list  = f'{uci_move_list} {move.uci()}'
+
+
+
         for agent in self.agents_all:
             dispb = getattr(agent, "display_board", None)
             if callable(dispb):
                 attribs = {'white_name': self.player_w_name,
-                           'black_name': self.player_b_name
+                           'black_name': self.player_b_name,
+                           'eco': f' {self.eco_code} {self.eco_name}' ,
+
+                           'match_site': self.match_site,
+                           'match_date': self.match_date,
+                           'uci_move_list': uci_move_list
                            }
                 agent.display_board(st_board, attribs=attribs)
 
     def update_display_move(self, mesg):
+
         for agent in self.agents_all:
             dispm = getattr(agent, "display_move", None)
             if callable(dispm):
@@ -363,6 +426,7 @@ class TurquoiseDispatcher:
                 agent.game_stats(self.stats)
 
     def update_display_info(self, mesg, max_board_preview_hmoves=6):
+
         st_msg = copy.deepcopy(mesg)
         st_board = copy.deepcopy(self.board)
         # XXX: deepcopy needs cleanup
@@ -745,6 +809,7 @@ class TurquoiseDispatcher:
             self.stats.append(self.undo_stats_stack.pop())
         self.update_display_board()
         self.update_stats()
+
         self.state = self.State.IDLE
 
     def go(self, msg):
