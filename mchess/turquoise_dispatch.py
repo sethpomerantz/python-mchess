@@ -69,6 +69,7 @@ class TurquoiseDispatcher:
 
         self.mode = None
 
+        self.PGN_PLAYBACK = False
         self.init_agents()
 
         self.set_default_mode()
@@ -237,9 +238,9 @@ class TurquoiseDispatcher:
             self.player_w_name = "None"
             self.player_b_name = "None"
         elif mode == self.Mode.PLAYER_PLAYER:
-            if self.player_w_name == None:
+            if not self.PGN_PLAYBACK
                 self.player_w_name = self.prefs['default_human_player']['name']
-            if self.player_w_name == None:
+            if not self.PGN_PLAYBACK:
                 self.player_b_name = self.prefs['default_human_player']['name']
             self.player_w = self.get_human_agents()
             self.player_b = self.get_human_agents()
@@ -624,6 +625,7 @@ class TurquoiseDispatcher:
 
     def new_game(self, msg):
         self.stop(new_mode=None, silent=True)
+        self.PGN_PLAYBACK = False
         self.log.info(f"New game initiated by {msg['actor']}")
         self.board.reset()
         self.undo_stack = []
@@ -673,6 +675,7 @@ class TurquoiseDispatcher:
 
     def import_pgn(self, msg):
         self.stop()
+        self.PGN_PLAYBACK = True
         self.stats = []
         self.undo_stack = []
         self.undo_stats_stack = []
