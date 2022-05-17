@@ -624,8 +624,8 @@ class TurquoiseDispatcher:
         sys.exit(0)
 
     def new_game(self, msg):
-        self.stop(new_mode=None, silent=True)
         self.PGN_PLAYBACK = False
+        self.stop(new_mode=None, silent=True)
         self.log.info(f"New game initiated by {msg['actor']}")
         self.board.reset()
         self.undo_stack = []
