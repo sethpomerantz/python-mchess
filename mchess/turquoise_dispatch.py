@@ -238,7 +238,7 @@ class TurquoiseDispatcher:
             self.player_w_name = "None"
             self.player_b_name = "None"
         elif mode == self.Mode.PLAYER_PLAYER:
-            if not self.PGN_PLAYBACK
+            if not self.PGN_PLAYBACK:
                 self.player_w_name = self.prefs['default_human_player']['name']
             if not self.PGN_PLAYBACK:
                 self.player_b_name = self.prefs['default_human_player']['name']
