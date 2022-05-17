@@ -237,8 +237,11 @@ class TurquoiseDispatcher:
             self.player_w_name = "None"
             self.player_b_name = "None"
         elif mode == self.Mode.PLAYER_PLAYER:
-            self.player_w_name = self.prefs['default_human_player']['name']
-            self.player_b_name = self.prefs['default_human_player']['name']
+
+            if self.player_w_name == None:
+                self.player_w_name = self.prefs['default_human_player']['name']
+            if self.player_w_name == None:
+                self.player_b_name = self.prefs['default_human_player']['name']
             self.player_w = self.get_human_agents()
             self.player_b = self.get_human_agents()
             self.player_watch = self.get_uci_agent()
